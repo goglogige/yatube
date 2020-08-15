@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}
+{% if flag %}
+    Форма редактирования публикации
+{% else %}
+    Форма добавления публикации
+{% endif %}
+{% endblock %}
+{% block header %}
+{% if flag %}
+    Форма редактирования публикации
+{% else %}
+    Форма добавления публикации
+{% endif %}
+{% endblock %}
+{% block content %}
+
+    {% if next %}
+        <div class="alert alert-info" role="alert">
+            Вы обратились к странице, доступ к которой возможен только для залогиненных пользователей.<br>
+             Пожалуйста, авторизуйтесь.
+        </div>
+    {% endif %}
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {% for field in form %}
+            <div class="form-group row" aria-required={% if field.field.required %}"true"{% else %}"false"{% endif %}>
+            <label for="{{ field.id_for_label }}" class="col-md-4 col-form-label text-md-right">{{ field.label }}{% if field.field.required %}<span class="required">*</span>{% endif %}</label>
+                <div class="col-md-6">
+                    {# подключаем фильтр и указываем класс #}
+                    {{ field }}
+                    {% if field.help_text %}
+                    <small id="{{ field.id_for_label }}-help" class="form-text text-muted">{{ field.help_text|safe }}</small>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+
+                    <div class="col-md-6 offset-md-4">
+                            <button type="submit" class="btn btn-primary">
+                                {% if flag %}
+                                    Сохранить
+                                {% else %}
+                                    Опубликовать
+                                {% endif %}
+                            </button>
+                    </div>
+        </form>
+
+{% endblock %}
