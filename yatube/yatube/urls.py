@@ -21,6 +21,8 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
+    # REST framework login and logout views:
+    # path(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     # Импортируем flatpages:
     path('about/', include('django.contrib.flatpages.urls')),
     # Созданные flatpages:
@@ -35,7 +37,6 @@ urlpatterns = [
     path("admin/admin123", admin.site.urls),
     # Импорт правил из приложения posts:
     path("", include("posts.urls")),
-
 ]
 
 handler404 = 'posts.views.page_not_found' # noqa
